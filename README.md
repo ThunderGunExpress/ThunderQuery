@@ -48,6 +48,7 @@ Will remotely enumerate targets via WMI to develop a system profile per target a
 	-Domain Role
 
 After profiles.csv is populated the tool will remotely poll targets every 30 seconds via WMI to collect established TCP connections. Remote and Local port numbers above 49152 are filtered out and stored in network connections.csv.
+
 WMI Query - SELECT LocalAddress,LocalPort,RemoteAddress,RemotePort FROM MSFT_NetTCPConnection WHERE state = 5 AND RemoteAddress != '127.0.0.1' AND RemoteAddress != '::1' AND (RemotePort < 49152 OR LocalPort < 49152)
 
 Result
