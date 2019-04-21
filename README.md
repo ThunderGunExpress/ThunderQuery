@@ -63,7 +63,11 @@ Example - 10.10.112.55,52847,10.10.112.50,135
 Neo4j
 ------------
 Importing into Neo4j (See https://ijustwannared.team for further details):
+
 LOAD CSV FROM "file:///profiles.csv" AS row1 CREATE(:DNSHostName:IPAddress{dnshostname:row1[0],domain:row1[1], username: row1[2],domainrole: row1[3],ipaddress:row1[4]})
+
 LOAD CSV FROM "file:///networkconnections.csv" AS row2 MERGE(:IPAddress{ipaddress:row2[2]})
+
 LOAD CSV FROM "file:///networkconnections.csv" AS row3 MATCH (a:IPAddress),(b:IPAddress) WHERE a.ipaddress = row3[0] AND b.ipaddress = row3[2] AND tointeger(row3[3]) < 49152 MERGE (a)-[r:NetConn {DestPort: tointeger(row3[3])}]->(b) return r
+
 LOAD CSV FROM "file:///networkconnections.csv" AS row4 MATCH (a:IPAddress),(b:IPAddress) WHERE a.ipaddress = row4[0] AND b.ipaddress = row4[2] AND tointeger(row4[1]) < 49152 MERGE (b)-[r:NetConn {DestPort: tointeger(row4[1])}]->(a) return r
